@@ -1,6 +1,3 @@
-
-# Versão final: V 1.00 (20.10.2024)
-
 import os
 import json
 import tkinter as tk
@@ -170,10 +167,6 @@ except Exception as e:
 titulo = tk.Label(janela, text="Renomeador de NFS-e", font=("Segoe UI", 17, "bold"), fg="#555555")
 titulo.place(relx=0.5, rely=0.03, anchor='n')
 
-# Função de validação para limitar a entrada a 4 caracteres numéricos
-def validar_ano(char, texto):
-    return char.isdigit() and len(texto) <= 4
-
 # Dropdown para selecionar o mês e entrada para o ano
 frame_meses_ano = tk.Frame(janela)
 frame_meses_ano.pack(pady=(50, 20))
@@ -184,8 +177,7 @@ dropdown_meses = tk.OptionMenu(frame_meses_ano, mes_selecionado, *['Janeiro', 'F
 dropdown_meses.grid(row=0, column=1, padx=(5, 40), pady=(30, 1))
 
 tk.Label(frame_meses_ano, text="Ano:", font=("Segoe UI", 11, "bold"), fg="#555555").grid(row=0, column=2, padx=(20, 2), pady=(30, 1))
-entry_ano = tk.Entry(frame_meses_ano, textvariable=ano_selecionado, width=5, font=("Segoe UI", 12),
-                     validate="key", validatecommand=(janela.register(validar_ano), '%S', '%P'))
+entry_ano = tk.Entry(frame_meses_ano, textvariable=ano_selecionado, width=5, font=("Segoe UI", 12))
 entry_ano.grid(row=0, column=3, padx=(5, 20), pady=(30, 1))
 
 # Entrada para a pasta
