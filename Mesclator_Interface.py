@@ -143,6 +143,7 @@ def executar_processo():
 # Configuração da janela principal
 janela = tk.Tk()
 janela.title("Renomeador de NFS-e - V 1.00")
+janela.iconbitmap("icone-heat.ico")
 janela.geometry("400x480")
 
 # Carregar configurações ao iniciar
