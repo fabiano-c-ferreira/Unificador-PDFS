@@ -1,3 +1,5 @@
+# Versão final: V 1.00 (20.10.2024)
+
 import os
 import json
 import tkinter as tk
