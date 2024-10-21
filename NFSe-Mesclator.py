@@ -11,6 +11,7 @@ from PyPDF2 import PdfMerger
 from datetime import datetime
 from tkinter import ttk
 
+# Nome do arquivo de configuração
 CONFIG_FILE = 'config.json'
 
 # Determine o caminho base dependendo se está rodando como script ou executável
@@ -20,6 +21,10 @@ if getattr(sys, 'frozen', False):
 else:
     # Quando executado como script Python
     base_path = os.path.abspath(".")
+
+# Use o diretório do usuário para armazenar o arquivo de configuração
+user_dir = os.path.expanduser("~")
+config_path = os.path.join(user_dir, CONFIG_FILE)
 
 # Mapeamento de meses em inglês para português
 meses_map = {
@@ -31,7 +36,6 @@ meses_map = {
 
 # Função para carregar as configurações salvas
 def carregar_configuracoes():
-    config_path = os.path.join(base_path, CONFIG_FILE)
     if os.path.exists(config_path):
         with open(config_path, 'r') as file:
             return json.load(file)
@@ -39,7 +43,6 @@ def carregar_configuracoes():
 
 # Função para salvar as configurações atuais
 def salvar_configuracoes(pasta, planilha, mes, ano):
-    config_path = os.path.join(base_path, CONFIG_FILE)
     with open(config_path, 'w') as file:
         json.dump({'pasta': pasta, 'planilha': planilha, 'mes': mes, 'ano': ano}, file)
 
