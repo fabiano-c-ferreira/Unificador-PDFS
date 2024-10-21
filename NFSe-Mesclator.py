@@ -1,6 +1,7 @@
 # Versão final: V 1.00 (20.10.2024)
 
 import os
+import sys
 import json
 import tkinter as tk
 from tkinter import filedialog, messagebox
@@ -12,6 +13,14 @@ from tkinter import ttk
 
 CONFIG_FILE = 'config.json'
 
+# Determine o caminho base dependendo se está rodando como script ou executável
+if getattr(sys, 'frozen', False):
+    # Quando executado como um executável
+    base_path = sys._MEIPASS
+else:
+    # Quando executado como script Python
+    base_path = os.path.abspath(".")
+
 # Mapeamento de meses em inglês para português
 meses_map = {
     "January": "Janeiro", "February": "Fevereiro", "March": "Março",
@@ -22,14 +31,16 @@ meses_map = {
 
 # Função para carregar as configurações salvas
 def carregar_configuracoes():
-    if os.path.exists(CONFIG_FILE):
-        with open(CONFIG_FILE, 'r') as file:
+    config_path = os.path.join(base_path, CONFIG_FILE)
+    if os.path.exists(config_path):
+        with open(config_path, 'r') as file:
             return json.load(file)
     return {'mes': 'Janeiro', 'ano': str(datetime.now().year)}  # Valor padrão
 
 # Função para salvar as configurações atuais
 def salvar_configuracoes(pasta, planilha, mes, ano):
-    with open(CONFIG_FILE, 'w') as file:
+    config_path = os.path.join(base_path, CONFIG_FILE)
+    with open(config_path, 'w') as file:
         json.dump({'pasta': pasta, 'planilha': planilha, 'mes': mes, 'ano': ano}, file)
 
 # Função para selecionar a pasta de PDFs
@@ -142,7 +153,7 @@ def executar_processo():
 # Configuração da janela principal
 janela = tk.Tk()
 janela.title("Renomeador de NFS-e - V 1.00")
-janela.iconbitmap("icone-heat.ico")
+janela.iconbitmap(os.path.join(base_path, "icone-heat.ico"))
 janela.geometry("400x480")
 
 # Carregar configurações ao iniciar
@@ -154,7 +165,7 @@ ano_selecionado = tk.StringVar(value=configuracoes.get('ano', str(datetime.now()
 
 # Carregar e exibir o logotipo
 try:
-    imagem_logo = Image.open("logo.png")
+    imagem_logo = Image.open(os.path.join(base_path, "logo.png"))
     largura_original, altura_original = imagem_logo.size
     nova_largura = int(largura_original * 0.20)
     nova_altura = int(altura_original * 0.20)
